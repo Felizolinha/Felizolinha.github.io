@@ -410,8 +410,7 @@
         }
 
         if ($targetElement !== undefined) {
-          //fireClick($targetElement, e);
-		  $targetElement.trigger(click);
+          fireClick($targetElement, e);
         }
       }
     }
