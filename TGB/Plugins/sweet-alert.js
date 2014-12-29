@@ -333,17 +333,6 @@
           break;
       }
     };
-
-	swal.isOpen = function() {
-	  var modal= getModal();
-	  if(hasClass(modal,"showSweetAlert")) {
-	    return true;
-	  } else if(hasClass(modal,"hideSweetAlert")) {
-		return false;
-	  } else {
-		return false;
-	  }
-    }
 	
     var $buttons = modal.querySelectorAll('button');
     for (var i = 0; i < $buttons.length; i++) {
@@ -430,8 +419,8 @@
           $targetElement = undefined;
         }
 
-        if ($targetElement !== undefined && !swal.isOpen()) {
-          fireClick($targetElement, e);
+        if ($targetElement !== undefined) {
+          try{fireClick($targetElement, e);} catch(e) {}
           return false;
         }
       }
