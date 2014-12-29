@@ -256,7 +256,6 @@
     fixVerticalPosition();
     openModal();
 
-
     // Modal interactions
     var modal = getModal();
 
@@ -335,6 +334,17 @@
       }
     };
 
+	swal.isOpen = function() {
+	  var modal= getModal();
+	  if(hasClass(modal,"showSweetAlert")) {
+	    return true;
+	  } else if(hasClass(modal,"hideSweetAlert")) {
+		return false;
+	  } else {
+		return false;
+	  }
+    }
+	
     var $buttons = modal.querySelectorAll('button');
     for (var i = 0; i < $buttons.length; i++) {
       $buttons[i].onclick     = onButtonEvent;
@@ -420,7 +430,7 @@
           $targetElement = undefined;
         }
 
-        if ($targetElement !== undefined && modalIsVisible) {
+        if ($targetElement !== undefined && !swal.isOpen()) {
           fireClick($targetElement, e);
           return false;
         }
