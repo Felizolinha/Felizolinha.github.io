@@ -420,7 +420,7 @@
           $targetElement = undefined;
         }
 
-        if ($targetElement !== undefined) {
+        if ($targetElement !== undefined && modalIsVisible) {
           fireClick($targetElement, e);
           return false;
         }
