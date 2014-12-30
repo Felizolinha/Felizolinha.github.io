@@ -139,7 +139,6 @@
   // Remember state in cases where opening and handling a modal will fiddle with it.
   var previousActiveElement,
       previousDocumentClick,
-      previousWindowKeyDown,
       lastFocusedButton;
 
   /*
@@ -631,7 +630,6 @@
     removeClass($warningIcon.querySelector('.dot'), 'pulseWarningIns');
 
     // Reset the page to its previous state
-    window.onkeydown = previousWindowKeyDown;
     document.onclick = previousDocumentClick;
     if (previousActiveElement) {
       previousActiveElement.focus();
