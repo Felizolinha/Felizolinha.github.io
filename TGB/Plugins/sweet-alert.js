@@ -403,15 +403,7 @@
         setFocusStyle($targetElement, params.confirmButtonColor); // TODO
 
       } else {
-        if (keyCode === 13 || keyCode === 32) {
-            if (btnIndex === -1) {
-              // ENTER/SPACE clicked outside of a button.
-              $targetElement = $okButton;
-            } else {
-              // Do nothing - let the browser handle it.
-              $targetElement = undefined;
-            }
-        } else if (keyCode === 27 && !($cancelButton.hidden || $cancelButton.style.display === 'none')) {
+		if (keyCode === 27 && !($cancelButton.hidden || $cancelButton.style.display === 'none')) {
           // ESC to cancel only if there's a cancel button displayed (like the alert() window).
           $targetElement = $cancelButton;
         } else {
