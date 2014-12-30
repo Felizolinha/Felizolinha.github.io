@@ -359,68 +359,6 @@
       }
     };
 
-
-    // Keyboard interactions
-    var $okButton = modal.querySelector('button.confirm'),
-        $cancelButton = modal.querySelector('button.cancel'),
-        $modalButtons = modal.querySelectorAll('button:not([type=hidden])');
-
-
-    function handleKeyDown(e) {
-      var keyCode = e.keyCode || e.which;
-
-      if ([9,27].indexOf(keyCode) === -1) {
-        // Don't do work on keys we don't care about.
-        return;
-      }
-
-      var $targetElement = e.target || e.srcElement;
-
-      var btnIndex = -1; // Find the button - note, this is a nodelist, not an array.
-      for (var i = 0; i < $modalButtons.length; i++) {
-        if ($targetElement === $modalButtons[i]) {
-          btnIndex = i;
-          break;
-        }
-      }
-
-      if (keyCode === 9) {
-        // TAB
-        if (btnIndex === -1) {
-          // No button focused. Jump to the confirm button.
-          $targetElement = $okButton;
-        } else {
-          // Cycle to the next button
-          if (btnIndex === $modalButtons.length - 1) {
-            $targetElement = $modalButtons[0];
-          } else {
-            $targetElement = $modalButtons[btnIndex + 1];
-          }
-        }
-
-        stopEventPropagation(e);
-        $targetElement.focus();
-        setFocusStyle($targetElement, params.confirmButtonColor); // TODO
-
-      } else {
-		if (keyCode === 27 && !($cancelButton.hidden || $cancelButton.style.display === 'none')) {
-          // ESC to cancel only if there's a cancel button displayed (like the alert() window).
-          $targetElement = $cancelButton;
-        } else {
-          // Fallback - let the browser handle it.
-          $targetElement = undefined;
-        }
-
-        if ($targetElement !== undefined) {
-          fireClick($targetElement, e);
-          return false;
-        }
-      }
-    }
-
-    previousWindowKeyDown = window.onkeydown;
-    window.onkeydown = handleKeyDown;
-
     function handleOnBlur(e) {
       var $targetElement = e.target || e.srcElement,
           $focusElement = e.relatedTarget,
@@ -549,7 +487,7 @@
           _imgHeight = 80;
 
       if (params.imageSize) {
-        var imgWidth  = params.imageSize.split('x')[0];
+        var imgWidth  = params.imageSize.split('x')[0]; 
         var imgHeight = params.imageSize.split('x')[1];
 
         if (!imgWidth || !imgHeight) {
