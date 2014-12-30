@@ -369,7 +369,7 @@
     function handleKeyDown(e) {
       var keyCode = e.keyCode || e.which;
 
-      if ([9,13,32,27].indexOf(keyCode) === -1) {
+      if ([9,27].indexOf(keyCode) === -1) {
         // Don't do work on keys we don't care about.
         return;
       }
