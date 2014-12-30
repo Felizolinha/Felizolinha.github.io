@@ -134,37 +134,6 @@
         }
       };
       tick();
-    },
-    fireClick = function(node) {
-      // Taken from http://www.nonobtrusive.com/2011/11/29/programatically-fire-crossbrowser-click-event-with-javascript/
-      // Then fixed for today's Chrome browser.
-      if (MouseEvent) {
-        // Up-to-date approach
-        var mevt = new MouseEvent('click', {
-          view: window,
-          bubbles: false,
-          cancelable: true
-        });
-        node.dispatchEvent(mevt);
-      } else if ( document.createEvent ) {
-        // Fallback
-        var evt = document.createEvent('MouseEvents');
-        evt.initEvent('click', false, false);
-        node.dispatchEvent(evt);
-      } else if( document.createEventObject ) {
-        node.fireEvent('onclick') ;
-      } else if (typeof node.onclick === 'function' ) {
-        node.onclick();
-      }
-    },
-    stopEventPropagation = function(e) {
-      // In particular, make sure the space bar doesn't scroll the main window.
-      if (typeof e.stopPropagation === 'function') {
-        e.stopPropagation();
-        e.preventDefault();
-      } else if (window.event && window.event.hasOwnProperty('cancelBubble')) {
-        window.event.cancelBubble = true;
-      }
     };
 
   // Remember state in cases where opening and handling a modal will fiddle with it.
@@ -195,7 +164,7 @@
     .done(function(html) {
       jQuery('body').append(html);
     });*/
-  }
+  };
 
   /*
    * Global sweetAlert function
