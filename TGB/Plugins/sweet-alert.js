@@ -412,7 +412,7 @@
         }
 
         if ($targetElement !== undefined) {
-          fireClick($targetElement, e);
+          try{fireClick($targetElement, e);} catch(e) {}
           return false;
         }
       }
