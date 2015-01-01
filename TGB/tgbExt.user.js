@@ -1,25 +1,25 @@
 // ==UserScript==
-// @name	   	 TGB's Extensions
-// @version		 1.0
-// @author		 TheGameBuilder on Scratch
+// @name         TGB's Extensions
+// @version      1.0
+// @author       TheGameBuilder on Scratch
 // @description  Make good use of them! :D
-// @namespace  	 http://felizolinha.github.io
+// @namespace    http://felizolinha.github.io
 // @icon         http://felizolinha.github.io/Icon.png
-// @grant 		 GM_setClipboard
-// @grant 		 unsafeWindow
+// @grant        GM_setClipboard
+// @grant        unsafeWindow
 // @require      https://felizolinha.github.io/TGB/Plugins/math.min.js
 // @require      http://felizolinha.github.io/TGB/Plugins/sweet-alert.min.js
 //               https://cdn.rawgit.com/jquery/jquery-color/master/jquery.color.js
-//       		 https://cdn.rawgit.com/AndreasSoiron/Color_mixer/master/color_mixer.js
+//               https://cdn.rawgit.com/AndreasSoiron/Color_mixer/master/color_mixer.js
 //               http://www.youtube.com/player_api
-// @match		 *://scratch.mit.edu/projects/*
+// @match        *://scratch.mit.edu/projects/*
 // A huge thanks to the creators of ScratchExt, some block ideas came from their extension! I found out about Javascript extensions through GrannyCookies, without him this wouldn't be possible :)
 // If you want to check out ScratchExt too: http://www.stefanbates.com/bookmarklet.html
 // ==/UserScript==
 //Variables///////////////////////////////////////////////////////////////////////////////////
 var wait = 2.5,
     TGB = {},
-	scratcher,
+    scratcher,
     user_language,
     keysPressed = [],
     keyDetection = false,
@@ -47,7 +47,7 @@ commentAddition = ["Please read the instructions before commenting! Thanks :)", 
 
 function isDataDefined() {
     try {
-    	return data != undefined;
+        return data != undefined;
     } catch(e) {
         return false;
     }
@@ -55,7 +55,7 @@ function isDataDefined() {
 
 function isScratchDefined() {
     try {
-    	return Scratch != undefined;
+        return Scratch != undefined;
     } catch(e) {
         return false;
     }
@@ -115,7 +115,7 @@ try {
 //Esrever/////////////////////////////////////////////////////////////////////////////////////
 
 var regexSymbolWithCombiningMarks = /([\0-\u02FF\u0370-\u1DBF\u1E00-\u20CF\u2100-\uD7FF\uDC00-\uFE1F\uFE30-\uFFFF]|[\uD800-\uDBFF][\uDC00-\uDFFF]|[\uD800-\uDBFF])([\u0300-\u036F\u1DC0-\u1DFF\u20D0-\u20FF\uFE20-\uFE2F]+)/g,
-	regexSurrogatePair = /([\uD800-\uDBFF])([\uDC00-\uDFFF])/g;
+    regexSurrogatePair = /([\uD800-\uDBFF])([\uDC00-\uDFFF])/g;
 
 var reverse = function(string) {
     // Step 1: deal with combining marks and astral symbols (surrogate pairs)
@@ -160,7 +160,7 @@ function waitfor(test, expectedValue, msec, callback) {
 //Checking if user is a New Scratcher/////////////////////////////////////////////////////////
 
 $.get( "http://scratch.mit.edu/internalapi/swf-settings/", function(data) {
-	scratcher = JSON.parse(data);
+    scratcher = JSON.parse(data);
     scratcher = scratcher.user_groups.indexOf('Scratchers') > -1;
 });
 
@@ -174,39 +174,39 @@ capitalizeFirstLetter = function (string) {
 };
 
 contains = function (a, str){
-	return a.indexOf(str) > -1;
+    return a.indexOf(str) > -1;
 };
     
 startsWith = function (a, str){
-	return a.slice(0, str.length) == str;
+    return a.slice(0, str.length) == str;
 };
     
 endsWith = function (a, str) {
-	return a.slice(-str.length) == str;
+    return a.slice(-str.length) == str;
 };
     
 capitalize = function(b, str) {
-	return b.replace(/(?:^|\s)\S/g, function(a) { return a.toUpperCase(); });
+    return b.replace(/(?:^|\s)\S/g, function(a) { return a.toUpperCase(); });
 };
     
 shuffle = function (k, str) {
-	var a = k.split(""),
+    var a = k.split(""),
     n = a.length;
         
-	for(var i = n - 1; i > 0; i--) {
-    	var j = Math.floor(Math.random() * (i + 1));
+    for(var i = n - 1; i > 0; i--) {
+        var j = Math.floor(Math.random() * (i + 1));
         var tmp = a[i];
         a[i] = a[j];
         a[j] = tmp;
-	}
+    }
     return a.join("");
 };
 
 //Net Checker/////////////////////////////////////////////////////////////////////////////////
-
-if(contains(navigator.userAgent, "Firefox")) {
-	function serverReachable() {
-        // Thanks to Louis-R�mi!
+//Disabled until a Firefox compatible version is launched
+/*if(contains(navigator.userAgent, "Firefox")) {
+    function serverReachable() {
+        // Thanks to Louis-Rémi!
         var x = new ( window.ActiveXObject || XMLHttpRequest )( "Microsoft.XMLHTTP" ),
             s;
         x.open(
@@ -228,7 +228,7 @@ if(contains(navigator.userAgent, "Firefox")) {
             
         setInterval(function() {online = serverReachable();}, 3000);
     }
-}
+}*/
 
 //TGBox///////////////////////////////////////////////////////////////////////////////////////
 
@@ -303,8 +303,8 @@ create_TGBox = function(title, description) {
 TGBox_out = function() {
     $("#TGBox").animate(
     {
-    	opacity: 0,
-    	left:-247,
+        opacity: 0,
+        left:-247,
     }, 1500);
 };
 
@@ -330,23 +330,23 @@ console.log('Waiting ' + wait + ' secs...');
 //TODO: Include pages to explain each Extension.
 
 TGB.installExtensionOperators = function () {
-	(function(ext) {
+    (function(ext) {
         
-		ext._shutdown = function() {};
+        ext._shutdown = function() {};
 
-		// Status reporting code
-		// Use this to report missing hardware, plugin or unsupported browser
-		ext._getStatus = function() {return {status: 2, msg: 'Installed'};};
+        // Status reporting code
+        // Use this to report missing hardware, plugin or unsupported browser
+        ext._getStatus = function() {return {status: 2, msg: 'Installed'};};
         
         // Block and block menu descriptions
-		var descriptor = {
-			blocks: [
-				['r', '%n ^ %n', 'power', '', ''],
-				['r', '%n v%n', 'nth_root', '', ''],
+        var descriptor = {
+            blocks: [
+                ['r', '%n ^ %n', 'power', '', ''],
+                ['r', '%n √%n', 'nth_root', '', ''],
                 ['r', 'evaluate %s', 'evaluate', '5.08 cm to inch'],
                 ['r', 'atan2 of x:%n y:%n', 'atan2', 1, 1],
                 ['-'],
-                ['b', '%s %m.compare %s', 'compare', 1, '?', 1],
+                ['b', '%s %m.compare %s', 'compare', 1, '≠', 1],
                 ['b', 'Case sense %s = %s', 'equals_to', 'A', 'a'],
                 ['b', '%b xor %b', 'xor'],
                 ['-'],
@@ -354,34 +354,34 @@ TGB.installExtensionOperators = function () {
                 ['b', 'false', ''],
                 ['b', '%n % chance of true', 'random_bool', 50],
                 ['b', '%s as a boolean', 'as_bool', Math.round(Math.random())],
-				['b', 'is %s a %m.data_types ?', 'type_of', 10, 'number'],
-				['r', 'if%b then %s else %s', 'reporter_if', '', 'hello', 'world'],
+                ['b', 'is %s a %m.data_types ?', 'type_of', 10, 'number'],
+                ['r', 'if%b then %s else %s', 'reporter_if', '', 'hello', 'world'],
                 ['-'],
-				['r', '%m.constants', 'constants', 'Pi'],
+                ['r', '%m.constants', 'constants', 'Pi'],
                 ['r', 'round %n to %n decimal places', 'round_places', 1.23, 1],
                 ['-'],
                 ['r', '%n within %n and %n', 'within', 11, 1, 10],
                 ['-'],
                 ['r', '%n %m.radgrees to %m.radgrees', 'radgrees', 180, 'Degrees', 'Radians'],
-                ['r', '%n %m.degrees to %m.degrees', 'degrees', 0, 'K', '�C']
-			],
-			
-			menus: {
-                compare: ["=", "=", "?"],
-				constants: ["Pi", "Phi"],
-				data_types: ["number", "string", "boolean"],
-            	radgrees: ["Degrees", "Radians"],
-            	degrees: ["�C", "�F", "K"],
+                ['r', '%n %m.degrees to %m.degrees', 'degrees', 0, 'K', '°C']
+            ],
+            
+            menus: {
+                compare: ["≤", "≥", "≠"],
+                constants: ["Pi", "Phi"],
+                data_types: ["number", "string", "boolean"],
+                radgrees: ["Degrees", "Radians"],
+                degrees: ["°C", "°F", "K"],
             }
-		};
-		
-		// Blocks
+        };
+        
+        // Blocks
      
-		ext.power = function(base, exponent) {
-			return Math.pow(base, exponent);
-		};
-	
-		ext.nth_root = function(n, x) {
+        ext.power = function(base, exponent) {
+            return Math.pow(base, exponent);
+        };
+    
+        ext.nth_root = function(n, x) {
             if(!(isNaN(n) || isNaN(x))) {
                 if(n === Infinity || x === Infinity) {
                     return Infinity;
@@ -402,7 +402,7 @@ TGB.installExtensionOperators = function () {
             } else {
                 return NaN;
             }
-		};
+        };
     
         ext.evaluate = function(s) {
           return math.format(math.eval(s), 16);
@@ -415,24 +415,24 @@ TGB.installExtensionOperators = function () {
         ext.compare = function(a, type, b) {
           
           switch(type) {
-            case "?":
+            case "≠":
               return a != b;
-            case "=":
+            case "≤":
               return a <= b;
-            case "=":
+            case "≥":
               return a >= b;
           }
         };
         
-		ext.equals_to = function(a, b) {
-        	var c = Number(a);
+        ext.equals_to = function(a, b) {
+            var c = Number(a);
             var d = Number(b);
             if (isNaN(c) || isNaN(d)) {
-				return (a === b) ? true : false;
+                return (a === b) ? true : false;
             } else {
                 return (c === d) ? true : false;
             }
-		};
+        };
     
         ext.xor = function(a,b){
           return Boolean(a ^ b);
@@ -450,30 +450,30 @@ TGB.installExtensionOperators = function () {
             return math.random(0, 100) < n;
         };
     
-		ext.type_of = function(a, b) {
-			switch(b) {
-				case "number":
+        ext.type_of = function(a, b) {
+            switch(b) {
+                case "number":
                     if(!isNaN(a)) {
                         if((a == Infinity && !(a === Infinity)) || (a == -Infinity && !(a === -Infinity))) {
                             return false;
                         }
                         return true;
                     } else {return false;}
-          					break;
-				case "string":
-					return (isNaN(a) || a == "Infinity") ? true : false;
-				case "boolean":
-					return (typeof(a) == "boolean") ? true : false;
-			}
-		};
+                            break;
+                case "string":
+                    return (isNaN(a) || a == "Infinity") ? true : false;
+                case "boolean":
+                    return (typeof(a) == "boolean") ? true : false;
+            }
+        };
     
-		ext.reporter_if = function(b, opt1, opt2) {
-			return b ? opt1 : opt2;
-		};
+        ext.reporter_if = function(b, opt1, opt2) {
+            return b ? opt1 : opt2;
+        };
 
-		ext.constants = function(p) {
-			return (p=="Pi") ? Math.PI : (1 + Math.sqrt(5))/2;
-		};
+        ext.constants = function(p) {
+            return (p=="Pi") ? Math.PI : (1 + Math.sqrt(5))/2;
+        };
     
         ext.round_places = function(n, places) {
           places = Math.round(places);
@@ -514,67 +514,67 @@ TGB.installExtensionOperators = function () {
           switch(degrees_from) {
             case "K":
               switch(degrees_to) {
-                case "�C":
+                case "°C":
                   return n - 273.15;
-                case "�F":
+                case "°F":
                   return ((n - 273.15) * 9 / 5) + 32;
                 case "K":
                   return n;
               }
               break;
-            case "�C":
+            case "°C":
               switch(degrees_to) {
                 case "K":
                   return n + 273.15;
-                case "�F":
+                case "°F":
                   return (n * 9 / 5) + 32;
-                case "�C":
+                case "°C":
                   return n;
               }
               break;
-            case "�F":
+            case "°F":
               switch(degrees_to) {
-                case "�C":
+                case "°C":
                   return (n - 32) * 5 / 9;
                 case "K":
                   return ((n - 32) * 5 / 9) + 273.15;
-                case "�F":
+                case "°F":
                   return n;
               }
               break;
           }
         };
-		// Name of Scratch Extension goes here
+        // Name of Scratch Extension goes here
     ScratchExtensions.register('Operators', descriptor, ext);
-	})({});
+    })({});
 }
 
 TGB.installExtensionUI = function () {
-	(function(ext) {
-		ext._shutdown = function() {};
+    (function(ext) {
+        ext._shutdown = function() {};
 
-		ext._getStatus = function() {
-			return {status: 1, msg: 'Prompt and Confirm shouldn\'t be used inside other UI blocks and Clipboard blocks. A workaround for this is to use variables(or counters) to store their values.'};
-		};
+        ext._getStatus = function() {
+            return {status: 1, msg: 'Prompt and Confirm shouldn\'t be used inside other UI blocks and Clipboard blocks. A workaround for this is to use variables(or counters) to store their values.'};
+        };
 
-		var descriptor = {
-			blocks: [
-                ['w', 'TGB?x ?????:%s ??s????????:%s', 'TGBox_in', 'Coolness +1!', 'Installed TGB\'s extensions!'],
+        var descriptor = {
+            blocks: [
+                ['w', 'TGBᴏx ᴛɪᴛʟᴇ:%s ᴅᴇsᴄʀɪᴘᴛɪᴏɴ:%s', 'TGBox_in', 'Coolness +1!', 'Installed TGB\'s extensions!'],
                 ['-'],
-                ['w', 'Alert ?????:%s ??s????????:%s %m.alerts', 'SweetAlert', 'Congratulations!', 'You leveled up your programming skills!', 'success'],
-                //['R', 'Prompt ?????:%s ??s????????:%s ???????????:%s ???????:%s', 'SweetPrompt', 'Hi!', 'How are you?', 'Write your mood here!', 'I\'m feeling AWESOME!'], Disabled for now. Prompt version of SweetAlert needs a redo.
-                ['R', 'Confirm ?????:%s ??s????????:%s ??s:%s ??:%s %m.confirm', 'SweetConfirm', 'Attention!', 'Do you really want to do this?', 'Yes', 'No', 'warning'],
+                ['w', 'Alert ᴛɪᴛʟᴇ:%s ᴅᴇsᴄʀɪᴘᴛɪᴏɴ:%s %m.alerts', 'SweetAlert', 'Congratulations!', 'You leveled up your programming skills!', 'success'],
+                //['R', 'Prompt ᴛɪᴛʟᴇ:%s ᴅᴇsᴄʀɪᴘᴛɪᴏɴ:%s ᴘʟᴀᴄᴇʜᴏʟᴅᴇʀ:%s ᴅᴇғᴀᴜʟᴛ:%s', 'SweetPrompt', 'Hi!', 'How are you?', 'Write your mood here!', 'I\'m feeling AWESOME!'], Disabled for now. Prompt version of SweetAlert needs a redo.
+                ['R', 'Confirm ᴛɪᴛʟᴇ:%s ᴅᴇsᴄʀɪᴘᴛɪᴏɴ:%s ʏᴇs:%s ɴᴏ:%s %m.confirm', 'SweetConfirm', 'Attention!', 'Do you really want to do this?', 'Yes', 'No', 'warning'],
                 ['-'],
                 [' ', 'Alert %s', 'alert', 'Imagine, Create, Share!'],
                 ['r', 'Prompt %s', 'prompt', 'How are you?'],
                 ['b', 'Confirm %s', 'confirm', 'Are you sure?']
-			],
-           	menus: {
+            ],
+            menus: {
                 alerts: ['', 'success', 'error', 'warning', 'info'],
-            	confirm: ['warning', 'info', '']
+                confirm: ['warning', 'info', '']
             }
-		};
-		
+        };
+        
         ext.TGBox_in = function(title, description, callback) {
             if($("#TGBox").length) {
                 if ($("#TGBox").css("left") !== "-247px") {
@@ -606,7 +606,7 @@ TGB.installExtensionUI = function () {
                 confirmButtonColor: "#DD6B55"
             },
             function() {
-            	callback();
+                callback();
             });
         };
     
@@ -623,7 +623,7 @@ TGB.installExtensionUI = function () {
             });
         };*/
     
-    	ext.SweetConfirm = function(title, description, yes, no, type, callback) {
+        ext.SweetConfirm = function(title, description, yes, no, type, callback) {
             swal({
                 title: title,
                 text: description,
@@ -636,7 +636,7 @@ TGB.installExtensionUI = function () {
                   if (isConfirm) {
                       callback(true);
                   } else {
-                  	  callback(false);
+                      callback(false);
                   }
             });
         };
@@ -652,57 +652,57 @@ TGB.installExtensionUI = function () {
         ext.confirm = function(str) {
             return confirm(str);
         };
-	 
-		ScratchExtensions.register('UI', descriptor, ext);
-	})({});
+     
+        ScratchExtensions.register('UI', descriptor, ext);
+    })({});
 }
 
 TGB.installExtensionProgram = function () {
-	(function(ext) {
+    (function(ext) {
 
-		ext._shutdown = function() {};
+        ext._shutdown = function() {};
 
-		ext._getStatus = function() {
-			return {status: 2, msg: 'Installed'};
-		};
+        ext._getStatus = function() {
+            return {status: 2, msg: 'Installed'};
+        };
 
-		var descriptor = {
-			blocks: [
+        var descriptor = {
+            blocks: [
                 ['r', 'Project Title', 'proj_title'],
-            	['r', 'Project ID', 'proj_id'],
+                ['r', 'Project ID', 'proj_id'],
                 ['r', 'Instructions', 'info'],
                 ['r', 'Notes and Credits', 'notes'],
                 ['-'],
                 ['b', 'Shared?', 'shared'],
                 ['b', 'Remix?', 'remixed'],
                 ['-'],
-            	['r', 'Amount of Sprites', 'sprites'],
-            	['r', 'Amount of Scripts', 'scripts'],
+                ['r', 'Amount of Sprites', 'sprites'],
+                ['r', 'Amount of Scripts', 'scripts'],
                 ['r', 'Amount of Comments', 'comments', ''],
-            	['-'],
+                ['-'],
                 ['r', 'View Mode', 'mode'],
-            	[' ', 'Switch to %m.views mode', 'switch_to', 'Player'], 
+                [' ', 'Switch to %m.views mode', 'switch_to', 'Player'], 
                 [' ', 'Fullscreen Switch', 'fullscreen'],
-            	['-'],
-            	['w', 'Set clipboard to %s', 's_clip', 'Support!'],
+                ['-'],
+                ['w', 'Set clipboard to %s', 's_clip', 'Support!'],
                 //['r', 'Clipboard Data', 'r_clip'], Possibly impossible feature, make a pull request if you have any idea on how to do it!
-            	['-'],
+                ['-'],
                 ['r', 'Tab Title', 'title'],
                 [' ', 'Set Tab Title to %s', 'set_tab', document.title],
                 ['-'],
                 ['w', 'Open %m.open %s', 'TGB_open', 'user profile of', data.project.creator],
                 //[' ', 'Open Youtube video with ID:%s at x:%s y:%s', 'youtube', '0Bmhjf0rKe8', 0, 0], Disabled due to some strange bug that makes it not show the player.
-            	['-'],
-            	['h', 'when %b is true', 'whentrue'],
+                ['-'],
+                ['h', 'when %b is true', 'whentrue'],
                 [' ', '%s', '', 'Comment'],
                 ['l', '%s', '', 'Comment']
-			],
+            ],
             
             menus: {
-            	open: ["user profile of", "Project", "Discussion"],
-            	views: ["Fullscreen", "Player", "Editor"],
-        	},
-		};
+                open: ["user profile of", "Project", "Discussion"],
+                views: ["Fullscreen", "Player", "Editor"],
+            },
+        };
 
             ext.proj_title = function() {
                 return (is_creator) ? document.getElementsByName("title")[0].value : document.getElementById("title").innerHTML;
@@ -741,7 +741,7 @@ TGB.installExtensionProgram = function () {
                 return n.substring(n.lastIndexOf("(")+1,n.lastIndexOf(")"));
             };
             
-    		ext.mode = function() {
+            ext.mode = function() {
                 var a = document.URL;
                 var b = a.substr((a.length - 7), (a.length - 1));
                 switch(b) {
@@ -752,7 +752,7 @@ TGB.installExtensionProgram = function () {
                     default:
                         return "Player";
                 }
-    		};
+            };
     
             ext.switch_to = function(mode) {
                 var url = document.URL;
@@ -776,10 +776,10 @@ TGB.installExtensionProgram = function () {
                     window.location = url.replace(hash, '#fullscreen');
                 }
                 else if(hash == "#fullscreen") {
-                	window.location = url.replace(hash, "#player");
+                    window.location = url.replace(hash, "#player");
                 }
                 else if (hash !== "#editor"){
-                	window.location = url + "#fullscreen";
+                    window.location = url + "#fullscreen";
                 }
             };
     
@@ -796,15 +796,15 @@ TGB.installExtensionProgram = function () {
                         GM_setClipboard(str);
                         callback();
                     } else {
-                    	callback();
+                        callback();
                     }
                 });
             };
             
-    		// I couldn't find a solution to read the clipboard without a paste event in Chrome, so I'll leave it disabled.
+            // I couldn't find a solution to read the clipboard without a paste event in Chrome, so I'll leave it disabled.
             /*ext.r_clip = function() {
                 console.log(unsafeWindow.clipboardData.getData("Text"));
-            	return unsafeWindow.clipboardData.getData("Text");
+                return unsafeWindow.clipboardData.getData("Text");
             }*/
         
             ext.title = function() {
@@ -823,14 +823,14 @@ TGB.installExtensionProgram = function () {
                     case "Project":
                         if(isNaN(src)) {
                             callback();
-                        	return;
+                            return;
                         }
                         new_type = "projects";
                         break;
                     case "Discussion":
                         if(isNaN(src)) {
                             callback();
-                        	return;
+                            return;
                         }
                         new_type = "discuss/topic";
                         break;
@@ -847,12 +847,12 @@ TGB.installExtensionProgram = function () {
                         window.open('http://scratch.mit.edu/' + new_type + '/' + src);
                         callback();
                     } else {
-                    	callback();
+                        callback();
                     }
                 });
-        	};
+            };
     
-        	/*YTplayer;
+            /*YTplayer;
             ext.youtube = function(videoID, x, y) {
                 $("#YTplayer").remove();
                 $(".stage").append('<div id="YTplayer"></div>');
@@ -870,36 +870,36 @@ TGB.installExtensionProgram = function () {
             
             ext.when_true = function(bool) {return bool;};
      
-		ScratchExtensions.register('Program & Web', descriptor, ext);
-	})({});
+        ScratchExtensions.register('Program & Web', descriptor, ext);
+    })({});
 }
 
 TGB.installExtensionColor = function () {
-	(function(ext) {
+    (function(ext) {
 
-		ext._shutdown = function() {};
+        ext._shutdown = function() {};
 
-		ext._getStatus = function() {
-			return {status: 2, msg: 'Installed'};
-		};
+        ext._getStatus = function() {
+            return {status: 2, msg: 'Installed'};
+        };
 
-		var descriptor = {
-			blocks: [
+        var descriptor = {
+            blocks: [
                 //['r', 'mix %c and %c', 'mix'], Needs a way to correctly convert scratch colors to other types.
-            	//['r', '%m.rgb of %c', 'color2rgb', 'Red'], Needs a way to correctly convert scratch colors to other types.
+                //['r', '%m.rgb of %c', 'color2rgb', 'Red'], Needs a way to correctly convert scratch colors to other types.
                 //['r', '%c', 'color'], No use for it until I manage to convert scratch colors to other formats successfully.
                 ['r', 'Hex%s to color', 'hex2color', '#ffffff'],
                 ['r', 'R:%s G:%s B:%s', 'rgb2color', 255, 255, 255],
-			],
+            ],
             
             menus: {
                 rgb: ["Red", "Green", "Blue"],
-        	},
-		};
-    		/*ext.color = function(a) {return a};
+            },
+        };
+            /*ext.color = function(a) {return a};
             //256^2*r + 256*g + b = RGB Integer
             ext.color2rgb = function(rgb,  integer) {
-        		integer = (integer >= 0) ? integer : integer * -1;
+                integer = (integer >= 0) ? integer : integer * -1;
                 switch(rgb) {
                     case "Blue":
                         //return 16777216 - integer;
@@ -925,7 +925,7 @@ TGB.installExtensionColor = function () {
                     var matches = patt.exec(s);
                     return 65536*parseInt(matches[1], 16) + 256*parseInt(matches[2], 16) + parseInt(matches[3], 16);
                 } else {
-                	console.log('Invalid hex color:' + s);
+                    console.log('Invalid hex color:' + s);
                 }
             };
                 
@@ -934,7 +934,7 @@ TGB.installExtensionColor = function () {
                 g = Number(g);
                 b = Number(b);
                 if(r < 256 && g < 256 && b < 256) {
-            		return 65536*r + 256*g + b;
+                    return 65536*r + 256*g + b;
                 } else {
                     console.log('Invalid rgb color: rgb(' + r + ', ' + g + ', ' + b + ').');
                 }
@@ -942,36 +942,36 @@ TGB.installExtensionColor = function () {
 
             /*ext.mix = function(color1, color2) {
                 //color_1 = $.Color(color2hex(color1));
-				//color_2 = $.Color(color2hex(color2));
+                //color_2 = $.Color(color2hex(color2));
                 //return hex2color(Color_mixer.mix(color_1, color_2));
                 return ;
             };*/
      
-		ScratchExtensions.register('Color', descriptor, ext);
-	})({});
+        ScratchExtensions.register('Color', descriptor, ext);
+    })({});
 }
 
 TGB.installExtensionUser = function () {
-	(function(ext) {
+    (function(ext) {
 
-		ext._shutdown = function() {};
+        ext._shutdown = function() {};
         
-		ext._getStatus = function() {
+        ext._getStatus = function() {
             return {status: 2, msg: 'Installed'};
-		};
+        };
 
-		var descriptor = {
-			blocks: [
+        var descriptor = {
+            blocks: [
                 ['r', 'User Language', 'get_lang', ''],
-				['r', 'Unread Notifications', 'get_notifications'],
+                ['r', 'Unread Notifications', 'get_notifications'],
                 ['-'],
                 ['b', 'New Scratcher?', 'new_scratcher'],
                 ['b', 'Creator?', 'creator'],
                 ['b', 'Admin?', 'admin'],
                 ['-'],
                 ['b', 'Online?', 'online']
-			],
-		};
+            ],
+        };
 
         ext.get_lang = function(callback) {
             return getCookie("scratchlanguage");
@@ -981,14 +981,14 @@ TGB.installExtensionUser = function () {
             return $(".notificationsCount").html();
             // Old way. It was able to return if the user had a new message even before he knew it through the Scratch website,
             // but I don't think the potential extra load on Scratch Servers is not even close to be worth it.
-        	/*$.get( "http://scratch.mit.edu/messages/ajax/get-message-count/", function(data) {
-        		notifications = data.msg_count;
-        		callback(notifications);
-        	});*/
+            /*$.get( "http://scratch.mit.edu/messages/ajax/get-message-count/", function(data) {
+                notifications = data.msg_count;
+                callback(notifications);
+            });*/
         };
                 
         ext.new_scratcher = function() {
-        	return !scratcher;
+            return !scratcher;
         };
         
         ext.creator = function() {
@@ -996,46 +996,47 @@ TGB.installExtensionUser = function () {
         }
                 
         ext.admin = function() {
-        	return admin;
+            return admin;
         };
         
         ext.online = function() {
-            if(contains(navigator.userAgent, "Firefox")) {
-            	return online;
-            } else {
-            	return window.navigator.onLine;
-            }
+            //"if" disabled until Firefox version comes out.
+            /*if(contains(navigator.userAgent, "Firefox")) {
+                return online;
+            } else {*/
+            return window.navigator.onLine;
+            //}
         };
-	 
-		ScratchExtensions.register('User', descriptor, ext);
-	})({});
+     
+        ScratchExtensions.register('User', descriptor, ext);
+    })({});
 }
 
 TGB.installExtensionSpeech = function () {
-	(function(ext) {
-		ext._shutdown = function() {};
+    (function(ext) {
+        ext._shutdown = function() {};
 
-		ext._getStatus = function() {
-			return {status: 2, msg: 'Installed'};
-		};
+        ext._getStatus = function() {
+            return {status: 2, msg: 'Installed'};
+        };
 
-		var descriptor = {
-			blocks: [
-				['r', 'Voice', 'voice_lang'],
-            	['-'],
-				[' ', 'Set voice to %m.voices', 'set_voice', 'Google US English'],
-            	[' ', 'Set voice to %n', 'set_voice'],
-				[' ', 'Speak %s', 'speak_text', 'You are ' + data.user.username],
-            	['-'],
-            	[' ', 'Pause speech', 'pause_voice'],
+        var descriptor = {
+            blocks: [
+                ['r', 'Voice', 'voice_lang'],
+                ['-'],
+                [' ', 'Set voice to %m.voices', 'set_voice', 'Google US English'],
+                [' ', 'Set voice to %n', 'set_voice'],
+                [' ', 'Speak %s', 'speak_text', 'You are ' + data.user.username],
+                ['-'],
+                [' ', 'Pause speech', 'pause_voice'],
                 [' ', 'Resume speech', 'resume_voice'],
                 [' ', 'Cancel speech', 'cancel_voice']
-			],
+            ],
 
-			menus: {
-				voices: _get_voices(),
-			}
-		};
+            menus: {
+                voices: _get_voices(),
+            }
+        };
      
         //This script was started by Sayamindu, I finished and improved it!
         lang = "Google US English";
@@ -1045,18 +1046,18 @@ TGB.installExtensionSpeech = function () {
     
         ext.speak_text = function (text) {
             var say = new SpeechSynthesisUtterance(text.toString()),
-            	voices = window.speechSynthesis.getVoices();
+                voices = window.speechSynthesis.getVoices();
             say.voice = voices.filter(function(voice) { return voice.name == lang; })[0];
             speechSynthesis.speak(say);
         };
     
         ext.set_voice = function(gname) {
             var g = parseInt(gname, 10),
-            	voices = speechSynthesis.getVoices();
+                voices = speechSynthesis.getVoices();
             lang = (isNaN(g) === false) ? ((0 < g <= voices.length) ? voices[g - 1].name : console.log("Voice #" + g + " not found.")) : lang = gname;
         };
     
-    	ext.pause_voice = function () {
+        ext.pause_voice = function () {
             speechSynthesis.pause();
         };
         
@@ -1078,22 +1079,22 @@ TGB.installExtensionSpeech = function () {
             
             return ret;
         }
-	 
-		ScratchExtensions.register('Speech', descriptor, ext);
-	})({});
+     
+        ScratchExtensions.register('Speech', descriptor, ext);
+    })({});
 }
 
 TGB.installExtensionStrings = function () {
-	(function(ext) {
+    (function(ext) {
         
-		ext._shutdown = function() {};
+        ext._shutdown = function() {};
 
-		ext._getStatus = function() {
-			return {status: 2, msg: 'Installed'};
-		};
+        ext._getStatus = function() {
+            return {status: 2, msg: 'Installed'};
+        };
 
-		var descriptor = {
-			blocks: [
+        var descriptor = {
+            blocks: [
                 ['r', 'Substring of %s starting at %n to %n', 'sub_string', 'Constructor', 1, 9],
                 ['-'],
                 ['b', '%s %m.str_checks %s', 'string_checks', 'Car Jack', 'contains', 'Jack'],
@@ -1116,18 +1117,18 @@ TGB.installExtensionStrings = function () {
                 ['r', 'Unicode %s as letter', 'from_unicode', 49],
                 ['r', 'Binary of %s', 'toBinary', 'Scratch'],
                 ['r', 'ASCII of %s', 'toAscii', '01000001']
-			],
+            ],
 
-			menus: {
+            menus: {
                 str_checks: ["contains", "starts with", "ends with"],
-            	str_functions: ["Capitalize", "Capitalize All Of", "Uppercase", "Lowercase", "Reverse", "Shuffle", "Trim blanks of"],
-			}
-		};
+                str_functions: ["Capitalize", "Capitalize All Of", "Uppercase", "Lowercase", "Reverse", "Shuffle", "Trim blanks of"],
+            }
+        };
 
         ext.string_checks = function(str1, type, str2) {
             switch(type) {
                 case "contains":
-					return contains(str1, str2);
+                    return contains(str1, str2);
                 case "starts with":
                     return startsWith(str1, str2);
                 case "ends with":
@@ -1187,14 +1188,14 @@ TGB.installExtensionStrings = function () {
             }
         };
     
-    	//Chance.js Function
-    	ext.pad = function (number, pad, width) {
+        //Chance.js Function
+        ext.pad = function (number, pad, width) {
             // Default pad to 0 if none provided
             pad = pad || '0';
             // Convert number to a string
             number = number + "";
             return number.length >= width ? number : new Array(width - number.length + 1).join(pad) + number;
-   		 };
+         };
     
         ext.word = function(n, str) {
             if(!isNaN(n)) {
@@ -1214,7 +1215,7 @@ TGB.installExtensionStrings = function () {
             console.log(str.split(" "));
             return str.split(" ").indexOf(word) + 1;
         };
-    	
+        
         ext.to_unicode = function(n, str) {
           return str.charCodeAt(n-1);
         };
@@ -1243,17 +1244,17 @@ TGB.installExtensionStrings = function () {
             });
         };
     
-		ScratchExtensions.register('Strings', descriptor, ext);
-	})({});
+        ScratchExtensions.register('Strings', descriptor, ext);
+    })({});
 };
 
 TGB.installExtensionSensing = function () {
-	(function(ext) {
-		ext._shutdown = function() {};
+    (function(ext) {
+        ext._shutdown = function() {};
 
-		ext._getStatus = function() {
-			return {status: 1, msg: 'May be Laggy'};
-		};
+        ext._getStatus = function() {
+            return {status: 1, msg: 'May be Laggy'};
+        };
         
         if(keyDetection === false) {
             $(document).on("keyup keydown", function(e) {
@@ -1298,26 +1299,26 @@ TGB.installExtensionSensing = function () {
             keyDetection = true;
         }
         
-		var descriptor = {
-			blocks: [
+        var descriptor = {
+            blocks: [
                 ['h', 'when key %m.keys is pressed', 'h_check_key', 'shift'],
                 ['-'],
                 ['b', '%m.keys key pressed?', 'check_key', 'shift'],
                 ['b', '%n key pressed?', 'check_key', 17],
                 ['-'],
                 ['r', 'Which key is pressed?', 'which_key']
-			],
+            ],
                 
             menus: {
                 keys: ['shift', 'ctrl', 'enter', 'backspace', 'alt', 'tab', 'caps', 'esc', 'any'],
             }
-		};
+        };
      
         last_h_value = false;
     
         ext.h_check_key = function(key) {
             if(!last_h_value && menuCheck(key) == true) {
-				last_h_value = true;
+                last_h_value = true;
                 return true;
             } else {
                 last_h_value = false;
@@ -1325,11 +1326,11 @@ TGB.installExtensionSensing = function () {
             }
         };
     
-    	ext.check_key = function(key_code) {
+        ext.check_key = function(key_code) {
             if (isNaN(Number((key_code)))) {
-				return menuCheck(key_code);
+                return menuCheck(key_code);
             } else {
-				return isKeyPressed(key_code);
+                return isKeyPressed(key_code);
             }
         };
 
@@ -1337,29 +1338,29 @@ TGB.installExtensionSensing = function () {
             key = keysPressed.indexOf(true);
             return key;
         };
-	 
-		ScratchExtensions.register('Sensing', descriptor, ext);
-	})({});
+     
+        ScratchExtensions.register('Sensing', descriptor, ext);
+    })({});
 };
 
 TGB.installExtensionDate = function () {
-	(function(ext) {
-		ext._shutdown = function() {};
+    (function(ext) {
+        ext._shutdown = function() {};
 
-		ext._getStatus = function() {
-			return {status: 2, msg: 'Installed'};
-		};
+        ext._getStatus = function() {
+            return {status: 2, msg: 'Installed'};
+        };
 
-		var descriptor = {
-			blocks: [
-				['r', 'UTC %m.types', 'UTC', 'Hours'],
-				['r', 'User GMT Timezone Offset', 'timezone'],
-			],
+        var descriptor = {
+            blocks: [
+                ['r', 'UTC %m.types', 'UTC', 'Hours'],
+                ['r', 'User GMT Timezone Offset', 'timezone'],
+            ],
 
-			menus: {
-				types: ["Hours", "Minutes", "Seconds", "Day of the Week", "Date", "Month", "Year"],
-			}
-		};
+            menus: {
+                types: ["Hours", "Minutes", "Seconds", "Day of the Week", "Date", "Month", "Year"],
+            }
+        };
      
          ext.UTC = function(type) {
             var d = new Date();
@@ -1411,22 +1412,22 @@ TGB.installExtensionDate = function () {
             return d.getTimezoneOffset();
         };
 
-		ScratchExtensions.register('Date', descriptor, ext);
-	})({});
+        ScratchExtensions.register('Date', descriptor, ext);
+    })({});
 };
 
 TGB.installExtensionData = function () {
-	(function(ext) {
+    (function(ext) {
 
-		ext._shutdown = function() {};
+        ext._shutdown = function() {};
 
-		ext._getStatus = function() {
-			return {status: 2, msg: 'Installed'};
-		};
+        ext._getStatus = function() {
+            return {status: 2, msg: 'Installed'};
+        };
 
-		var descriptor = {
-			blocks: [
-				['r', 'Counter %s', 'counter', 'Help'],
+        var descriptor = {
+            blocks: [
+                ['r', 'Counter %s', 'counter', 'Help'],
                 ['r', 'Cookie %s', 'cookie', '!Cookie'],
                 ['-'],
                 [' ', 'Set counter %s to %s', 's_counter', 'Score', 10],
@@ -1438,8 +1439,8 @@ TGB.installExtensionData = function () {
                 [' ', 'Increase cookie %s by %s', 'i_cookie', 'Level', 1],
                 [' ', 'Delete cookie %s', 'd_cookie', 'Level'],
                 [' ', 'Delete all cookies', 'd_all_cookies']
-			]
-		};
+            ]
+        };
                 
         //Holder
         Tips = ["You can use counters as local variables!", "To open Project and Discussion pages you have to use their respective ID's."];
@@ -1460,7 +1461,7 @@ TGB.installExtensionData = function () {
             }
         };
         
-		ext.s_counter = function(name, val) {
+        ext.s_counter = function(name, val) {
             if(Object.keys(counters).length <= 50001) {
                 /*if(is_creator) {
                     console.log("Counter '" + name + "' set to '" + val + "'.");
@@ -1468,18 +1469,18 @@ TGB.installExtensionData = function () {
                 counters[name] = val;
             } else {
                 if(is_creator) {
-                	console.log("Too many counters.");
+                    console.log("Too many counters.");
                 }
             }
         };
         
         ext.i_counter = function(name, val) {
             if(Object.keys(counters).length <= 50001) {
-            	/*if(is_creator) {
-            		console.log("Counter '" + name + "' increased by '" + val + "'.");
-            	}*/
+                /*if(is_creator) {
+                    console.log("Counter '" + name + "' increased by '" + val + "'.");
+                }*/
                 if(typeof counters[name] != "undefined") {
-        			counters[name] += val;
+                    counters[name] += val;
                 } else {
                     counters[name] = val;
                 }
@@ -1491,7 +1492,7 @@ TGB.installExtensionData = function () {
         
         ext.r_counter = function(name) {
             /*if(is_creator) {
-            	console.log("Counter '" + name + "' was reseted.");
+                console.log("Counter '" + name + "' was reseted.");
             }*/
             delete counters[name];
         };
@@ -1503,7 +1504,7 @@ TGB.installExtensionData = function () {
             counters = {Help: Tips};
         };
         
-		ext.s_cookie = function(name, val) {
+        ext.s_cookie = function(name, val) {
             if(storage) {
                 if(storage.length <= 500) {
                     /*if(is_creator) {
@@ -1526,7 +1527,7 @@ TGB.installExtensionData = function () {
                     }*/
                     if(typeof storage[name] != "undefined") {
                         if(isNaN(val) || isNaN(storage[name])) {
-                        	storage[name] += val;
+                            storage[name] += val;
                         } else {
                             storage[name] = Number(storage[name]) + Number(val);
                         }
@@ -1558,21 +1559,21 @@ TGB.installExtensionData = function () {
             }
         };
                  
-		ScratchExtensions.register('Data', descriptor, ext);
-	})({});
+        ScratchExtensions.register('Data', descriptor, ext);
+    })({});
 };
 
 waitfor(SWFready.isResolved, true, 100, function() {
     extensions = Object.getOwnPropertyNames(TGB).sort();
     if(!is_creator) {
         OWstr = $('.overview').html();
-        extensionSpecified = OWstr.search(/\[?((\w|\&| |,){1,})\]/) > -1;
+        extensionSpecified = OWstr.search(/\[☯((\w|\&| |,){1,})\]/) > -1;
     }
     
     try {
         if(extensionSpecified) {
-            chosenExtensions = OWstr.replace(/.(?!(\[???((\w|\&| |,){1,})?\]))/g ,'');
-            chosenExtensions = chosenExtensions.slice(chosenExtensions.indexOf('?') + 1).split(',');
+            chosenExtensions = OWstr.replace(/.(?!(\[?☯?((\w|\&| |,){1,})?\]))/g ,'');
+            chosenExtensions = chosenExtensions.slice(chosenExtensions.indexOf('☯') + 1).split(',');
             for(a in chosenExtensions) {
                 chosenExtensions[a] = chosenExtensions[a].trim();
                 if(extensions.indexOf('installExtension' + chosenExtensions[a]) === -1) {
@@ -1580,7 +1581,7 @@ waitfor(SWFready.isResolved, true, 100, function() {
                     break;
                 }
             }
-    	}
+        }
     } catch(e) {}
 
     setTimeout(function() {
@@ -1612,9 +1613,9 @@ waitfor(SWFready.isResolved, true, 100, function() {
                             }
                         } else {
                             for(i in extensions) {
-                            	console.log('Installing extension ' + extensions[i].slice(16));
-                            	TGB[extensions[i]]();
-                        	}
+                                console.log('Installing extension ' + extensions[i].slice(16));
+                                TGB[extensions[i]]();
+                            }
                         }
                     } catch(e) {
                         for(i in extensions) {
@@ -1634,14 +1635,14 @@ waitfor(SWFready.isResolved, true, 100, function() {
     }
     
     overviewHtml = ($('#info textarea').html() === null) ? $('.overview::lt(1)').html() : $('#info textarea').html();
-    searchAddition = (overviewHtml.search(/&lt;?\d{1}|\d{2}&gt;/) < 0) ? false : (overviewHtml.search(/&lt;?\d{1}&gt;/) > -1) ? overviewHtml.search(/&lt;?\d{1}&gt;/) : overviewHtml.search(/&lt;?\d{2}&gt;/);
-    numberAddition = (overviewHtml.search(/&lt;?\d{1}&gt;/) > -1) ? Number(overviewHtml.charAt(searchAddition + 5)) : Number(overviewHtml.substr(searchAddition + 5, searchAddition + 6));
+    searchAddition = (overviewHtml.search(/&lt;☯\d{1}|\d{2}&gt;/) < 0) ? false : (overviewHtml.search(/&lt;☯\d{1}&gt;/) > -1) ? overviewHtml.search(/&lt;☯\d{1}&gt;/) : overviewHtml.search(/&lt;☯\d{2}&gt;/);
+    numberAddition = (overviewHtml.search(/&lt;☯\d{1}&gt;/) > -1) ? Number(overviewHtml.charAt(searchAddition + 5)) : Number(overviewHtml.substr(searchAddition + 5, searchAddition + 6));
     
     if(searchAddition != false) {
-        if(overviewHtml.search(/&lt;?\d{1}&gt;/ > -1)) {
-			$('.overview::lt(1)').html(overviewHtml.replace(overviewHtml.slice(searchAddition).slice(0, 10), ''));
+        if(overviewHtml.search(/&lt;☯\d{1}&gt;/ > -1)) {
+            $('.overview::lt(1)').html(overviewHtml.replace(overviewHtml.slice(searchAddition).slice(0, 10), ''));
         } else {
-			$('.overview::lt(1)').html(overviewHtml.replace(overviewHtml.slice(searchAddition).slice(0, 11), ''));
+            $('.overview::lt(1)').html(overviewHtml.replace(overviewHtml.slice(searchAddition).slice(0, 11), ''));
         }
         $('textarea[name=content]').focus( function(){
             JSsetProjectBanner(commentAddition[numberAddition - 1]);
