@@ -1566,13 +1566,13 @@ waitfor(SWFready.isResolved, true, 100, function() {
     extensions = Object.getOwnPropertyNames(TGB).sort();
     if(!is_creator) {
         OWstr = $('.overview').html();
-        extensionSpecified = OWstr.search(/\[?((\w|\&| |,){1,})\]/) > -1;
+        extensionSpecified = OWstr.search(/\[\u262f((\w|\&| |,){1,})\]/) > -1;
     }
     
     try {
         if(extensionSpecified) {
-            chosenExtensions = OWstr.replace(/.(?!(\[???((\w|\&| |,){1,})?\]))/g ,'');
-            chosenExtensions = chosenExtensions.slice(chosenExtensions.indexOf('?') + 1).split(',');
+            chosenExtensions = OWstr.replace(/.(?!(\[?\u262f?((\w|\&| |,){1,})?\]))/g ,'');
+            chosenExtensions = chosenExtensions.slice(chosenExtensions.indexOf('\u262f') + 1).split(',');
             for(a in chosenExtensions) {
                 chosenExtensions[a] = chosenExtensions[a].trim();
                 if(extensions.indexOf('installExtension' + chosenExtensions[a]) === -1) {
@@ -1634,11 +1634,11 @@ waitfor(SWFready.isResolved, true, 100, function() {
     }
     
     overviewHtml = ($('#info textarea').html() === null) ? $('.overview::lt(1)').html() : $('#info textarea').html();
-    searchAddition = (overviewHtml.search(/&lt;?\d{1}|\d{2}&gt;/) < 0) ? false : (overviewHtml.search(/&lt;?\d{1}&gt;/) > -1) ? overviewHtml.search(/&lt;?\d{1}&gt;/) : overviewHtml.search(/&lt;?\d{2}&gt;/);
-    numberAddition = (overviewHtml.search(/&lt;?\d{1}&gt;/) > -1) ? Number(overviewHtml.charAt(searchAddition + 5)) : Number(overviewHtml.substr(searchAddition + 5, searchAddition + 6));
+    searchAddition = (overviewHtml.search(/&lt;\u262f\d{1}|\d{2}&gt;/) < 0) ? false : (overviewHtml.search(/&lt;\u262f\d{1}&gt;/) > -1) ? overviewHtml.search(/&lt;\u262f\d{1}&gt;/) : overviewHtml.search(/&lt;\u262f\d{2}&gt;/);
+    numberAddition = (overviewHtml.search(/&lt;\u262f\d{1}&gt;/) > -1) ? Number(overviewHtml.charAt(searchAddition + 5)) : Number(overviewHtml.substr(searchAddition + 5, searchAddition + 6));
     
     if(searchAddition != false) {
-        if(overviewHtml.search(/&lt;?\d{1}&gt;/ > -1)) {
+        if(overviewHtml.search(/&lt;\u262f\d{1}&gt;/ > -1)) {
 			$('.overview::lt(1)').html(overviewHtml.replace(overviewHtml.slice(searchAddition).slice(0, 10), ''));
         } else {
 			$('.overview::lt(1)').html(overviewHtml.replace(overviewHtml.slice(searchAddition).slice(0, 11), ''));
