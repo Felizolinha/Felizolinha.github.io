@@ -342,11 +342,11 @@ TGB.installExtensionOperators = function () {
         var descriptor = {
             blocks: [
                 ['r', '%n ^ %n', 'power', '', ''],
-                ['r', '%n √%n', 'nth_root', '', ''],
+                ['r', '%n \u221a%n', 'nth_root', '', ''],
                 ['r', 'evaluate %s', 'evaluate', '5.08 cm to inch'],
                 ['r', 'atan2 of x:%n y:%n', 'atan2', 1, 1],
                 ['-'],
-                ['b', '%s %m.compare %s', 'compare', 1, '≠', 1],
+                ['b', '%s %m.compare %s', 'compare', 1, '\u2260', 1],
                 ['b', 'Case sense %s = %s', 'equals_to', 'A', 'a'],
                 ['b', '%b xor %b', 'xor'],
                 ['-'],
@@ -367,7 +367,7 @@ TGB.installExtensionOperators = function () {
             ],
             
             menus: {
-                compare: ["≤", "≥", "≠"],
+                compare: ["\u2264", "\u2265", "\u2260"],
                 constants: ["Pi", "Phi"],
                 data_types: ["number", "string", "boolean"],
                 radgrees: ["Degrees", "Radians"],
@@ -415,11 +415,11 @@ TGB.installExtensionOperators = function () {
         ext.compare = function(a, type, b) {
           
           switch(type) {
-            case "≠":
+            case "\u2260":
               return a != b;
-            case "≤":
+            case "\u2264":
               return a <= b;
-            case "≥":
+            case "\u2265":
               return a >= b;
           }
         };
@@ -559,11 +559,11 @@ TGB.installExtensionUI = function () {
 
         var descriptor = {
             blocks: [
-                ['w', 'TGBᴏx ᴛɪᴛʟᴇ:%s ᴅᴇsᴄʀɪᴘᴛɪᴏɴ:%s', 'TGBox_in', 'Coolness +1!', 'Installed TGB\'s extensions!'],
+                ['w', 'TGBox Title:%s Description:%s', 'TGBox_in', 'Coolness +1!', 'Installed TGB\'s extensions!'],
                 ['-'],
-                ['w', 'Alert ᴛɪᴛʟᴇ:%s ᴅᴇsᴄʀɪᴘᴛɪᴏɴ:%s %m.alerts', 'SweetAlert', 'Congratulations!', 'You leveled up your programming skills!', 'success'],
+                ['w', 'Alert Title:%s Description:%s %m.alerts', 'SweetAlert', 'Congratulations!', 'You leveled up your programming skills!', 'success'],
                 //['R', 'Prompt ᴛɪᴛʟᴇ:%s ᴅᴇsᴄʀɪᴘᴛɪᴏɴ:%s ᴘʟᴀᴄᴇʜᴏʟᴅᴇʀ:%s ᴅᴇғᴀᴜʟᴛ:%s', 'SweetPrompt', 'Hi!', 'How are you?', 'Write your mood here!', 'I\'m feeling AWESOME!'], Disabled for now. Prompt version of SweetAlert needs a redo.
-                ['R', 'Confirm ᴛɪᴛʟᴇ:%s ᴅᴇsᴄʀɪᴘᴛɪᴏɴ:%s ʏᴇs:%s ɴᴏ:%s %m.confirm', 'SweetConfirm', 'Attention!', 'Do you really want to do this?', 'Yes', 'No', 'warning'],
+                ['R', 'Confirm Title:%s Description:%s Yes:%s No:%s %m.confirm', 'SweetConfirm', 'Attention!', 'Do you really want to do this?', 'Yes', 'No', 'warning'],
                 ['-'],
                 [' ', 'Alert %s', 'alert', 'Imagine, Create, Share!'],
                 ['r', 'Prompt %s', 'prompt', 'How are you?'],
@@ -1567,13 +1567,13 @@ waitfor(SWFready.isResolved, true, 100, function() {
     extensions = Object.getOwnPropertyNames(TGB).sort();
     if(!is_creator) {
         OWstr = $('.overview').html();
-        extensionSpecified = OWstr.search(/\[☯((\w|\&| |,){1,})\]/) > -1;
+        extensionSpecified = OWstr.search(/\[\u262f((\w|\&| |,){1,})\]/) > -1;
     }
     
     try {
         if(extensionSpecified) {
-            chosenExtensions = OWstr.replace(/.(?!(\[?☯?((\w|\&| |,){1,})?\]))/g ,'');
-            chosenExtensions = chosenExtensions.slice(chosenExtensions.indexOf('☯') + 1).split(',');
+            chosenExtensions = OWstr.replace(/.(?!(\[?\u262f?((\w|\&| |,){1,})?\]))/g ,'');
+            chosenExtensions = chosenExtensions.slice(chosenExtensions.indexOf('\u262f') + 1).split(',');
             for(a in chosenExtensions) {
                 chosenExtensions[a] = chosenExtensions[a].trim();
                 if(extensions.indexOf('installExtension' + chosenExtensions[a]) === -1) {
@@ -1635,11 +1635,11 @@ waitfor(SWFready.isResolved, true, 100, function() {
     }
     
     overviewHtml = ($('#info textarea').html() === null) ? $('.overview::lt(1)').html() : $('#info textarea').html();
-    searchAddition = (overviewHtml.search(/&lt;☯\d{1}|\d{2}&gt;/) < 0) ? false : (overviewHtml.search(/&lt;☯\d{1}&gt;/) > -1) ? overviewHtml.search(/&lt;☯\d{1}&gt;/) : overviewHtml.search(/&lt;☯\d{2}&gt;/);
-    numberAddition = (overviewHtml.search(/&lt;☯\d{1}&gt;/) > -1) ? Number(overviewHtml.charAt(searchAddition + 5)) : Number(overviewHtml.substr(searchAddition + 5, searchAddition + 6));
+    searchAddition = (overviewHtml.search(/&lt;\u262f\d{1}|\d{2}&gt;/) < 0) ? false : (overviewHtml.search(/&lt;\u262f\d{1}&gt;/) > -1) ? overviewHtml.search(/&lt;\u262f\d{1}&gt;/) : overviewHtml.search(/&lt;\u262f\d{2}&gt;/);
+    numberAddition = (overviewHtml.search(/&lt;\u262f\d{1}&gt;/) > -1) ? Number(overviewHtml.charAt(searchAddition + 5)) : Number(overviewHtml.substr(searchAddition + 5, searchAddition + 6));
     
     if(searchAddition != false) {
-        if(overviewHtml.search(/&lt;☯\d{1}&gt;/ > -1)) {
+        if(overviewHtml.search(/&lt;\u262f\d{1}&gt;/ > -1)) {
             $('.overview::lt(1)').html(overviewHtml.replace(overviewHtml.slice(searchAddition).slice(0, 10), ''));
         } else {
             $('.overview::lt(1)').html(overviewHtml.replace(overviewHtml.slice(searchAddition).slice(0, 11), ''));
