@@ -186,7 +186,6 @@
         sweetWrap = document.createElement('div');
 
     sweetWrap.innerHTML = sweetHTML;
-    $(".sweet-overlay").parent().append('<iframe class="iframeshim" frameborder="0" scrolling="no">&lt;html&gt;&lt;head&gt;&lt;/head&gt;&lt;body&gt;&lt;/body&gt;&lt;/html&gt;</iframe>');
 
     // For readability: check sweet-alert.html
     document.body.appendChild(sweetWrap);
