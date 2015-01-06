@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         TGB's Extensions
-// @version      1.0
+// @version      1.1
 // @author       TheGameBuilder on Scratch
 // @description  Make good use of them! :D
 // @namespace    http://felizolinha.github.io
@@ -43,6 +43,20 @@ waitfor(isScratchDefined, true, 100, function() {
 console.log("                                                                                      \n                                                                                      \n.---.--..--. .       .-.           .     .      .---.     .                           \n  |:    |   \)|      \(   \)         _|_    |      |        _|_               o          \n  || --.|--:  .--.   `-. .-.--.-.  |  .-.|--.   |--- -. ,-|  .-..--. .--.  .  .-..--. \n  |:   ||   \) `--.  \(   |  | \(   \) | \(   |  |   |      :  | \(.-'|  | `--.  | \(   \)  | \n  ' `--''--'  `--'   `-' `-'  `-'`-`-'`-''  `-  '---'-' `-`-'`--'  `-`--'-' `-`-''  `-\n                                                                                      \n                                                                                      ");
 commentAddition = ["Please read the instructions before commenting! Thanks :)", "Please use the forum to post your scores!", "Feel free to make your requests here!", "Please use my profile to make requests! Thanks :)", "Thanks for commenting! :)"];
 
+//IFrame Shim with Pepperflash Detection//////////////////////////////////////////////////////
+//Pepperflash detection according to Igor Shastin's answer at http://stackoverflow.com/questions/12866060/detecting-pepper-ppapi-flash-with-javascript
+var isPPAPI = false,
+    flashStr = 'application/x-shockwave-flash',
+    mimeTypes = navigator.mimeTypes;
+
+if(mimeTypes && mimeTypes[flashStr] && mimeTypes[flashStr].enabledPlugin &&
+  (mimeTypes[flashStr].enabledPlugin.filename.match(/pepflashplayer|Pepper/gi))) isPPAPI = true;
+
+if(!isPPAPI) {
+    $('param:eq(2)').attr('value', 'window');
+    $('.sweet-alert').append('<iframe class="iframeshim" frameBorder="0" scrolling="no" style="width:100%; height:100%; opacity: 0; z-index: 0; left: 50%; margin-left:-256px; pointer-events:none;"></iframe>');
+}
+
 //Check if the data object is defined to avoid loading errors/////////////////////////////////
 
 function isDataDefined() {
@@ -63,14 +77,14 @@ function isScratchDefined() {
 
 //////////////////////////////////////////////////////////////////////////////////////////////
 
-var link = window.document.createElement('link'),
-    installCSS = function(url) {
-        link.href = url;
-        document.getElementsByTagName("HEAD")[0].appendChild(link);
-    };
-link.rel = 'stylesheet';
+installCSS = function(url) {
+    var link = window.document.createElement('link');
+    link.href = url;
+    link.rel = 'stylesheet';
+    document.getElementsByTagName("HEAD")[0].appendChild(link);
+};
 
-installCSS('http://felizolinha.github.io/TGB/Plugins/sweet-alert.css');
+installCSS('https://felizolinha.github.io/TGB/Plugins/sweet-alert.css');
 
 //Youtube/////////////////////////////////////////////////////////////////////////////////////
 //Block is not working, so I'll leave this disabled for now.
@@ -102,6 +116,7 @@ function onPlayerStateChange(event) {
 }*/
 
 //Local Storage Check///////////////////////////////////////////////////////////////////////
+//By Mathias Bynens
 
 try {
   uid = new Date;
@@ -113,6 +128,7 @@ try {
 } catch (exception) {}
 
 //Esrever/////////////////////////////////////////////////////////////////////////////////////
+//By Mathias Bynens
 
 var regexSymbolWithCombiningMarks = /([\0-\u02FF\u0370-\u1DBF\u1E00-\u20CF\u2100-\uD7FF\uDC00-\uFE1F\uFE30-\uFFFF]|[\uD800-\uDBFF][\uDC00-\uDFFF]|[\uD800-\uDBFF])([\u0300-\u036F\u1DC0-\u1DFF\u20D0-\u20FF\uFE20-\uFE2F]+)/g,
     regexSurrogatePair = /([\uD800-\uDBFF])([\uDC00-\uDFFF])/g;
@@ -181,7 +197,7 @@ startsWith = function (a, str){
     return a.slice(0, str.length) == str;
 };
     
-endsWith = function (a, str) {
+function endsWith(a, str) {
     return a.slice(-str.length) == str;
 };
     
@@ -547,7 +563,7 @@ TGB.installExtensionOperators = function () {
         // Name of Scratch Extension goes here
     ScratchExtensions.register('Operators', descriptor, ext);
     })({});
-}
+};
 
 TGB.installExtensionUI = function () {
     (function(ext) {
@@ -655,7 +671,7 @@ TGB.installExtensionUI = function () {
      
         ScratchExtensions.register('UI', descriptor, ext);
     })({});
-}
+};
 
 TGB.installExtensionProgram = function () {
     (function(ext) {
@@ -872,7 +888,7 @@ TGB.installExtensionProgram = function () {
      
         ScratchExtensions.register('Program & Web', descriptor, ext);
     })({});
-}
+};
 
 TGB.installExtensionColor = function () {
     (function(ext) {
@@ -949,7 +965,7 @@ TGB.installExtensionColor = function () {
      
         ScratchExtensions.register('Color', descriptor, ext);
     })({});
-}
+};
 
 TGB.installExtensionUser = function () {
     (function(ext) {
@@ -993,7 +1009,7 @@ TGB.installExtensionUser = function () {
         
         ext.creator = function() {
             return is_creator;
-        }
+        };
                 
         ext.admin = function() {
             return admin;
@@ -1010,7 +1026,7 @@ TGB.installExtensionUser = function () {
      
         ScratchExtensions.register('User', descriptor, ext);
     })({});
-}
+};
 
 TGB.installExtensionSpeech = function () {
     (function(ext) {
@@ -1082,7 +1098,7 @@ TGB.installExtensionSpeech = function () {
      
         ScratchExtensions.register('Speech', descriptor, ext);
     })({});
-}
+};
 
 TGB.installExtensionStrings = function () {
     (function(ext) {
