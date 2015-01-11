@@ -359,8 +359,9 @@ TGB.installExtensionOperators = function () {
             blocks: [
                 ['r', '%n ^ %n', 'power', '', ''],
                 ['r', '%n \u221a%n', 'nth_root', '', ''],
-                ['r', 'evaluate %s', 'evaluate', '5.08 cm to inch'],
+                ['-'],
                 ['r', 'atan2 of x:%n y:%n', 'atan2', 1, 1],
+                ['r', 'evaluate %s', 'evaluate', '5.08 cm to inch'],
                 ['-'],
                 ['b', '%s %m.compare %s', 'compare', 1, '\u2260', 1],
                 ['b', 'Case sense %s = %s', 'equals_to', 'A', 'a'],
@@ -688,6 +689,7 @@ TGB.installExtensionProgram = function () {
                 ['r', 'Project ID', 'proj_id'],
                 ['r', 'Instructions', 'info'],
                 ['r', 'Notes and Credits', 'notes'],
+                //['r', 'Days since last update', 'lst_upd', ''],
                 ['-'],
                 ['b', 'Shared?', 'shared'],
                 ['b', 'Remix?', 'remixed'],
@@ -708,6 +710,8 @@ TGB.installExtensionProgram = function () {
                 ['-'],
                 ['w', 'Open %m.open %s', 'TGB_open', 'user profile of', data.project.creator],
                 //[' ', 'Open Youtube video with ID:%s at x:%s y:%s', 'youtube', '0Bmhjf0rKe8', 0, 0], Disabled due to some strange bug that makes it not show the player.
+                ['-'],
+                [' ', 'Log %s', 'log', 'to the console.'],
                 ['-'],
                 ['h', 'when %b is true', 'whentrue'],
                 [' ', '%s', '', 'Comment'],
@@ -736,6 +740,10 @@ TGB.installExtensionProgram = function () {
                 return notes;
             };
             
+            /*ext.lst_upd = function() {
+                
+            };*/
+        
             ext.shared = function() {
                 return shared;
             };
@@ -866,6 +874,10 @@ TGB.installExtensionProgram = function () {
                         callback();
                     }
                 });
+            };
+        
+            ext.log = function(msg) {
+                console.log(msg);
             };
     
             /*YTplayer;
@@ -1114,6 +1126,7 @@ TGB.installExtensionStrings = function () {
                 ['r', 'Substring of %s starting at %n to %n', 'sub_string', 'Constructor', 1, 9],
                 ['-'],
                 ['b', '%s %m.str_checks %s', 'string_checks', 'Car Jack', 'contains', 'Jack'],
+                ['b', 'Is %s %m.uplow ?', 'up_low', 'STRING', 'uppercase'],
                 ['r', '%m.str_functions %s', 'string_functions', 'Capitalize', 'scratch'],
                 ['-'],
                 //['r', 'Place %n that %s is in %s', 'nth_occurence', '2', 'can', 'Can a can can a can?'], "ToDo" block.
@@ -1137,8 +1150,14 @@ TGB.installExtensionStrings = function () {
 
             menus: {
                 str_checks: ["contains", "starts with", "ends with"],
+                uplow: ["uppercase", "lowercase", "mixed Lower & Upper cases"],
                 str_functions: ["Capitalize", "Capitalize All Of", "Uppercase", "Lowercase", "Reverse", "Shuffle", "Trim blanks of"],
             }
+        };
+    
+        ext.sub_string = function(a, b, c) {
+            a = String(a);
+            return a.substring((b - 1), c);
         };
 
         ext.string_checks = function(str1, type, str2) {
@@ -1151,8 +1170,21 @@ TGB.installExtensionStrings = function () {
                     return endsWith(str1, str2);
             }
         };
+        
+        ext.up_low = function(str, cases) {
+            str = String(str);
+            switch(cases) {
+                case "uppercase":
+                    return str === str.toUpperCase();
+                case "lowercase":
+                    return str === str.toLowerCase();
+                case "mixed Lower & Upper cases":
+                    return str !== str.toUpperCase() && str !== str.toLowerCase();
+            }
+        };
     
         ext.string_functions = function(type, str) {
+           str = String(str);
            switch(type) {
                case "Capitalize":
                    return capitalizeFirstLetter(str);
@@ -1177,10 +1209,6 @@ TGB.installExtensionStrings = function () {
         
         ext.find_starting_at = function (a, b, c) {
             return a.indexOf(b, parseInt(c) - 1) + 1;
-        };
-    
-        ext.sub_string = function(a, b, c) {
-            return a.substring((b - 1), c);
         };
     
         ext.replace_substr = function(a, b, str, sub_string) {
