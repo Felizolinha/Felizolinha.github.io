@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         TGB's Extensions
-// @version      1.2
+// @version      1.3
 // @author       TheGameBuilder on Scratch
 // @description  Make good use of them! :D
 // @namespace    http://felizolinha.github.io
@@ -9,7 +9,8 @@
 // @grant        unsafeWindow
 // @require      https://felizolinha.github.io/TGB/Plugins/math.min.js
 // @require      http://felizolinha.github.io/TGB/Plugins/sweet-alert.min.js
-//               https://cdn.rawgit.com/jquery/jquery-color/master/jquery.color.js
+//               JQuery color crashes the script. There will be some cool new Color blocks when I fix it!
+//               http://code.jquery.com/color/jquery.color-2.1.2.min.js
 //               https://cdn.rawgit.com/AndreasSoiron/Color_mixer/master/color_mixer.js
 //               http://www.youtube.com/player_api
 // @match        *://scratch.mit.edu/projects/*
@@ -126,6 +127,13 @@ try {
   fail && (storage = false);
   storage['!Cookie'] = 1; //Just a little Easter Egg :p
 } catch (exception) {}
+
+//Signed Decimal Fix//Thanks for explaining it to me, DadOfMrLog!///////////////////////////
+//Based on: http://stackoverflow.com/questions/6146177/convert-a-signed-decimal-to-hex-encoded-with-twos-complement
+
+function dec_fix(num) {
+    return parseInt(Number('0x' + (num < 0 ? (0xFFFFFFFF + num + 1).toString(16).slice(2) : num.toString(16))), 10);
+};
 
 //Esrever/////////////////////////////////////////////////////////////////////////////////////
 //By Mathias Bynens
@@ -711,11 +719,10 @@ TGB.installExtensionProgram = function () {
                 ['w', 'Open %m.open %s', 'TGB_open', 'user profile of', data.project.creator],
                 //[' ', 'Open Youtube video with ID:%s at x:%s y:%s', 'youtube', '0Bmhjf0rKe8', 0, 0], Disabled due to some strange bug that makes it not show the player.
                 ['-'],
-                [' ', 'Log %s', 'log', 'to the console.'],
-                ['-'],
                 ['h', 'when %b is true', 'whentrue'],
                 [' ', '%s', '', 'Comment'],
-                ['l', '%s', '', 'Comment']
+                ['l', '%s', '', 'Comment'],
+                [' ', 'Log %s', 'log', 'to the console.']
             ],
             
             menus: {
@@ -913,36 +920,20 @@ TGB.installExtensionColor = function () {
 
         var descriptor = {
             blocks: [
-                //['r', 'mix %c and %c', 'mix'], Needs a way to correctly convert scratch colors to other types.
-                //['r', '%m.rgb of %c', 'color2rgb', 'Red'], Needs a way to correctly convert scratch colors to other types.
-                //['r', '%c', 'color'], No use for it until I manage to convert scratch colors to other formats successfully.
+                ['r', '%c', 'color', math.pickRandom([255, 65280, 16711680])],
+                ['-'],
+                //['r', 'mix %c and %c', 'mix'],
                 ['r', 'Hex%s to color', 'hex2color', '#ffffff'],
                 ['r', 'R:%s G:%s B:%s', 'rgb2color', 255, 255, 255],
+                ['-'],
+                ['r', '%m.rgb of %c', 'color2rgb', 'Red'], 
             ],
             
             menus: {
                 rgb: ["Red", "Green", "Blue"],
             },
         };
-            /*ext.color = function(a) {return a};
-            //256^2*r + 256*g + b = RGB Integer
-            ext.color2rgb = function(rgb,  integer) {
-                integer = (integer >= 0) ? integer : integer * -1;
-                switch(rgb) {
-                    case "Blue":
-                        //return 16777216 - integer;
-                        return integer >> 16;
-                        //Math.floor(integer / 65536)
-                        break;
-                    case "Green":
-                        return (integer - 16711680) >> 16;     //integer % 256;
-                        break;
-                    case "Red":
-                        return integer >> 8;
-                        //Math.floor(integer / 256) % 256;
-                        break;
-                }
-            }*/
+            ext.color = function(integer) {return integer;};
                 
             ext.hex2color = function(s) {
                 if(s.charAt(0) != '#') {
@@ -968,6 +959,23 @@ TGB.installExtensionColor = function () {
                 }
             };
 
+    
+            //256^2*r + 256*g + b = RGB Integer
+            ext.color2rgb = function(rgb,  integer) {
+                integer = dec_fix(integer);
+                switch(rgb) {
+                    case "Blue":
+                        return integer % 256;
+                        break;
+                    case "Green":
+                        return Math.floor(integer / 256) % 256;
+                        break;
+                    case "Red":
+                        return Math.floor(integer / 65536);
+                        break;
+                }
+            }
+    
             /*ext.mix = function(color1, color2) {
                 //color_1 = $.Color(color2hex(color1));
                 //color_2 = $.Color(color2hex(color2));
@@ -1054,11 +1062,15 @@ TGB.installExtensionSpeech = function () {
                 ['-'],
                 [' ', 'Set voice to %m.voices', 'set_voice', 'Google US English'],
                 [' ', 'Set voice to %n', 'set_voice'],
+                ['-'],
                 [' ', 'Speak %s', 'speak_text', 'You are ' + data.user.username],
+                ['w', 'Speak %s and wait', 'speak_wait', 'You are a ' + (scratcher ? 'Scratcher' : 'New Scratcher')],
                 ['-'],
                 [' ', 'Pause speech', 'pause_voice'],
                 [' ', 'Resume speech', 'resume_voice'],
-                [' ', 'Cancel speech', 'cancel_voice']
+                [' ', 'Cancel speech', 'cancel_voice'],
+                ['-'],
+                ['b', 'Speaking?', 'check_speech']
             ],
 
             menus: {
@@ -1095,6 +1107,17 @@ TGB.installExtensionSpeech = function () {
         
         ext.cancel_voice = function () {
             speechSynthesis.cancel();
+        };
+        
+        ext.check_speech = function() {
+            return speechSynthesis.speaking;
+        };
+        
+        ext.speak_wait = function (text, callback) {
+            ext.speak_text(text);
+            waitfor(ext.check_speech, false, 100, function() {
+                callback();
+            });
         };
         
         function _get_voices() {
@@ -1150,7 +1173,7 @@ TGB.installExtensionStrings = function () {
 
             menus: {
                 str_checks: ["contains", "starts with", "ends with"],
-                uplow: ["uppercase", "lowercase", "mixed Lower & Upper cases"],
+                uplow: ["uppercase", "lowercase", "alphanumeric", "mixed Lower & Upper cases"],
                 str_functions: ["Capitalize", "Capitalize All Of", "Uppercase", "Lowercase", "Reverse", "Shuffle", "Trim blanks of"],
             }
         };
@@ -1180,6 +1203,8 @@ TGB.installExtensionStrings = function () {
                     return str === str.toLowerCase();
                 case "mixed Lower & Upper cases":
                     return str !== str.toUpperCase() && str !== str.toLowerCase();
+                case "alphanumeric":
+                    return /^[\w\d]*$/.test(str);
             }
         };
     
