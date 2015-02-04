@@ -2,7 +2,6 @@
 
 ☯ Please note that the ![](http://i.cubeupload.com/GNjTGq.png) **Google Chrome** browser is recommended for using this extension, but it is supposed to work in any browser that has a userscript manager able to run [GM_* functions](http://tampermonkey.net/documentation.php#GM_addStyle).
  
-**Happy New Year!**
 Did you ever feel like Scratch needed more blocks? I certainly do, and I think you probably feel like this too.
 For this reason, I present you... TGB'S Extensions!
 
