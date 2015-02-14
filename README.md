@@ -7,7 +7,7 @@ For this reason, I present you... TGB'S Extensions!
 
 **Features**
 
-This Scratch Extension brings **over a 100 new features** to Scratch, from string manipulation to blocks that evaluate Math [(works a lot like it does in this web app)](http://mathnotepad.com/). There are so many possibilities!
+This Scratch Extension brings **over a 100 new features** to Scratch, from string manipulation to blocks that evaluate Math [(works a lot like it does in this web app)](http://mathnotepad.com/).
 
 Then out of the blue someone appears and asks:
 **"** But TGB, we can't even share projects that use extensions properly! It's such a long and boring process! **"**
